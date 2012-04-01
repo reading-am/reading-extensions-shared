@@ -2,13 +2,13 @@
 // else we might double post in firefox
 try { if(window.frameElement === null){
 
-var DOMAIN = '0.0.0.0:3000',
-    PROTOCOL = 'http',
-    VERSION = '1.1.1',
-    PLATFORM = (typeof chrome !== 'undefined' ? 'chrome' : 'firefox'),
-    head = document.getElementsByTagName('head')[0],
-    loaded = false,
-    _this = this; // "self" is reserved in firefox
+var DOMAIN    = '0.0.0.0:3000',
+    PROTOCOL  = 'http',
+    VERSION   = '1.1.2',
+    PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : 'firefox'),
+    head      = document.getElementsByTagName('head')[0],
+    loaded    = false,
+    _this     = this; // "self" is reserved in firefox
 
 var load = function(){
   var vars = document.createElement('script'),
