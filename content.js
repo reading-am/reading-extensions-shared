@@ -2,8 +2,8 @@
 // else we might double post in firefox
 try { if(window.frameElement === null){
 
-var DOMAIN    = '0.0.0.0:3000',
-    PROTOCOL  = 'http',
+var DOMAIN    = 'reading.am',
+    PROTOCOL  = 'https',
     VERSION   = '1.1.2',
     PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : 'firefox'),
     head      = document.getElementsByTagName('head')[0],
