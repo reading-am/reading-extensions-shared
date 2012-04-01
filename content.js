@@ -1,11 +1,11 @@
 // make sure we're not in an iframe
 // else we might double post in firefox
-try { if(window.frameElement === null){
+try { if(window.top === window){
 
-var DOMAIN    = 'reading.am',
-    PROTOCOL  = 'https',
+var DOMAIN    = '0.0.0.0:3000',
+    PROTOCOL  = 'http',
     VERSION   = '1.1.2',
-    PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : 'firefox'),
+    PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : (typeof safari !== 'undefined' ? 'safari' : 'firefox')),
     head      = document.getElementsByTagName('head')[0],
     loaded    = false,
     _this     = this; // "self" is reserved in firefox
@@ -51,19 +51,28 @@ if(
   submit({url: document.location.href, title: document.title});
 }
 
+var relay_message = function(message){
+  console.log('message', message);
+  var func = _this[message.func];
+  delete message.func;
+  func(message);
+}
+
 switch(PLATFORM){
   case 'chrome':
     chrome.extension.onRequest.addListener(
       function(request, sender, sendResponse){
-        _this[request.func](request);
+        replay_message(request);
         sendResponse({}); // close the connection
       }
     );
     break;
   case 'firefox':
-    self.on('message', function(request){
-      _this[request.func](request);
-    });
+    self.on('message', relay_message);
+    break;
+  case 'safari':
+    console.log('on safari');
+    safari.application.addEventListener('message', relay_message, false);
     break;
 }
 
