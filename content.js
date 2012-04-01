@@ -56,6 +56,16 @@ var relay_message = function(message){
   var func = _this[message.func];
   delete message.func;
   func(message);
+};
+
+var get_parent = function(curNode, parentType){
+  curNode = curNode.parentNode;
+  parentType = parentType.toUpperCase();
+  while (curNode){
+    if(curNode.nodeName == parentType) return curNode;
+    else curNode = curNode.parentNode;
+  }
+  return false;
 }
 
 switch(PLATFORM){
@@ -75,6 +85,17 @@ switch(PLATFORM){
       var message  = event.message;
       message.func = event.name;
       relay_message(message);
+    }, false);
+    document.addEventListener('contextmenu', function(event){
+      var name  = event.target.nodeName.toLowerCase(),
+          nodes = [{
+            name: name,
+            url: name == 'a' ? event.target.href : event.target.src
+          }];
+      if(parent = get_parent(event.target, 'a')){
+        nodes.push({name: parent.nodeName.toLowerCase(), url: parent.href});
+      }
+      safari.self.tab.setContextMenuEventUserInfo(event, nodes);
     }, false);
     break;
 }
