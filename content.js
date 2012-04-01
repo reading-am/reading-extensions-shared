@@ -86,6 +86,7 @@ switch(PLATFORM){
       message.func = event.name;
       relay_message(message);
     }, false);
+    // safari requires that you check contextmenu context in the injected script
     document.addEventListener('contextmenu', function(event){
       var name  = event.target.nodeName.toLowerCase(),
           nodes = [{
