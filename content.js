@@ -71,8 +71,11 @@ switch(PLATFORM){
     self.on('message', relay_message);
     break;
   case 'safari':
-    console.log('on safari');
-    safari.application.addEventListener('message', relay_message, false);
+    safari.self.addEventListener('message', function(event){
+      var message  = event.message;
+      message.func = event.name;
+      relay_message(message);
+    }, false);
     break;
 }
 
