@@ -2,9 +2,9 @@
 // else we might double post in firefox
 try { if(window.top === window){
 
-var DOMAIN    = '0.0.0.0:3000',
-    PROTOCOL  = 'http',
-    VERSION   = '1.1.2',
+var DOMAIN    = 'reading.am',
+    PROTOCOL  = 'https',
+    VERSION   = '1.1.3',
     PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : (typeof safari !== 'undefined' ? 'safari' : 'firefox')),
     head      = document.getElementsByTagName('head')[0],
     loaded    = false,
@@ -58,6 +58,7 @@ var relay_message = function(message){
   func(message);
 };
 
+// only used by Safari at the moment
 var get_parent = function(curNode, parentType){
   curNode = curNode.parentNode;
   parentType = parentType.toUpperCase();
@@ -66,7 +67,7 @@ var get_parent = function(curNode, parentType){
     else curNode = curNode.parentNode;
   }
   return false;
-}
+};
 
 switch(PLATFORM){
   case 'chrome':
@@ -96,6 +97,7 @@ switch(PLATFORM){
       if(parent = get_parent(event.target, 'a')){
         nodes.push({name: parent.nodeName.toLowerCase(), url: parent.href});
       }
+      // set userInfo so we can access it in the global html page
       safari.self.tab.setContextMenuEventUserInfo(event, nodes);
     }, false);
     break;
