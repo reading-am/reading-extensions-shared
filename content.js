@@ -73,7 +73,7 @@ switch(PLATFORM){
   case 'chrome':
     chrome.extension.onRequest.addListener(
       function(request, sender, sendResponse){
-        replay_message(request);
+        relay_message(request);
         sendResponse({}); // close the connection
       }
     );
