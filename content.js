@@ -10,6 +10,10 @@ var DOMAIN    = 'reading.am',
     loaded    = false,
     _this     = this; // "self" is reserved in firefox
 
+// uncomment for local testing
+//DOMAIN = '0.0.0.0:3000';
+//PROTOCOL = 'http';
+
 var load = function(){
   var vars = document.createElement('script'),
       script = document.createElement('script');
