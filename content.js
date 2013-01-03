@@ -18,7 +18,7 @@ var DOMAIN    = 'reading.am',
 // We may want to think about putting the file on a CDN.
 var s_tag = document.createElement('script');
 s_tag.src = PROTOCOL+"://"+DOMAIN+"/assets/notifier/loader.js";
-
+head.appendChild(s_tag);
 
 var load = function () {
   var vars = document.createElement('script'),
