@@ -14,7 +14,12 @@ var DOMAIN    = 'reading.am',
 //DOMAIN = '0.0.0.0:3000';
 //PROTOCOL = 'http';
 
-var load = function(){
+// This will load the notifier on every page.
+// We may want to think about putting the file on a CDN.
+script.src = PROTOCOL+"://"+DOMAIN+"/assets/notifier/loader.js";
+
+
+var load = function () {
   var vars = document.createElement('script'),
       script = document.createElement('script');
 
@@ -26,7 +31,7 @@ var load = function(){
   return true;
 };
 
-var submit = function(params){
+var submit = function (params) {
   if(!loaded) loaded = load();
   var script = document.createElement('script'),
       url   = params.url,
@@ -43,19 +48,22 @@ var loc = document.location.href,
     ref = document.referrer;
 if(
   // don't post while still on Reading
-  loc.indexOf(DOMAIN) == -1
+  loc.indexOf(DOMAIN) == -1 &&
   // don't post on oauth pages
-  && loc.indexOf('/oauth/') == -1
+  loc.indexOf('/oauth/') == -1 &&
   // account for http and https
-  && (ref.indexOf(DOMAIN) == 7 || ref.indexOf(DOMAIN) == 8)
+  (ref.indexOf(DOMAIN) == 7 || ref.indexOf(DOMAIN) == 8) &&
   // exclude auth and settings sections
-  && ref.indexOf('/settings') == -1
+  ref.indexOf('/settings') == -1
   ){
-  // if we came from Reading, auto post
-  submit({url: document.location.href, title: document.title});
-}
+    // if we came from Reading, auto post
+    submit({
+      url: document.location.href,
+      title: document.title
+    });
+  }
 
-var relay_message = function(message){
+var relay_message = function (message) {
   console.log('message', message);
   var func = _this[message.func];
   delete message.func;
@@ -63,10 +71,10 @@ var relay_message = function(message){
 };
 
 // only used by Safari at the moment
-var get_parent = function(curNode, parentType){
+var get_parent = function (curNode, parentType) {
   curNode = curNode.parentNode;
   parentType = parentType.toUpperCase();
-  while (curNode){
+  while (curNode) {
     if(curNode.nodeName == parentType) return curNode;
     else curNode = curNode.parentNode;
   }
@@ -97,8 +105,10 @@ switch(PLATFORM){
           nodes = [{
             name: name,
             url: name == 'a' ? event.target.href : event.target.src
-          }];
-      if(parent = get_parent(event.target, 'a')){
+          }],
+          parent = get_parent(event.target, 'a');
+
+      if (parent) {
         nodes.push({name: parent.nodeName.toLowerCase(), url: parent.href});
       }
       // set userInfo so we can access it in the global html page
