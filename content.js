@@ -16,7 +16,8 @@ var DOMAIN    = 'reading.am',
 
 // This will load the notifier on every page.
 // We may want to think about putting the file on a CDN.
-script.src = PROTOCOL+"://"+DOMAIN+"/assets/notifier/loader.js";
+var s_tag = document.createElement('script');
+s_tag.src = PROTOCOL+"://"+DOMAIN+"/assets/notifier/loader.js";
 
 
 var load = function () {
