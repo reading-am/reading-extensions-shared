@@ -2,7 +2,7 @@
 // else we might double post in firefox
 try { if(window.top === window){
 
-var DOMAIN    = 'reading.am',
+var DOMAIN    = 'www.reading.am',
     PROTOCOL  = 'https',
     VERSION   = '1.1.3',
     PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : (typeof safari !== 'undefined' ? 'safari' : 'firefox')),
@@ -11,8 +11,8 @@ var DOMAIN    = 'reading.am',
     _this     = this; // "self" is reserved in firefox
 
 // uncomment for local testing
-//DOMAIN = '0.0.0.0:3000';
-//PROTOCOL = 'http';
+// DOMAIN = 'www.reading.dev:3000';
+// PROTOCOL = 'http';
 
 var load = function(){
   var vars = document.createElement('script'),
