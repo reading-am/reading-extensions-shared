@@ -4,22 +4,22 @@ try { if(window.top === window){
 
 var DOMAIN    = 'www.reading.am',
     PROTOCOL  = 'https',
-    VERSION   = '1.1.3',
+    // uncomment for local testing
+    // DOMAIN = 'www.reading.dev:3000',
+    // PROTOCOL = 'http',
+    ROOT_URL  = PROTOCOL+'://'+DOMAIN,
+    VERSION   = '1.1.4',
     PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : (typeof safari !== 'undefined' ? 'safari' : 'firefox')),
     head      = document.getElementsByTagName('head')[0],
     loaded    = false,
     _this     = this; // "self" is reserved in firefox
-
-// uncomment for local testing
-// DOMAIN = 'www.reading.dev:3000';
-// PROTOCOL = 'http';
 
 var load = function(){
   var vars = document.createElement('script'),
       script = document.createElement('script');
 
   vars.appendChild(document.createTextNode('var reading = {platform:"'+PLATFORM+'",version:"'+VERSION+'"};'));
-  script.src = PROTOCOL+"://"+DOMAIN+"/assets/bookmarklet/loader.js";
+  script.src = ROOT_URL+"/assets/bookmarklet/loader.js";
 
   head.appendChild(vars);
   head.appendChild(script);
