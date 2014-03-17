@@ -4,30 +4,36 @@ var ROOT_DOMAIN = 'reading.am';
 
 var CSP = exports.CSP = {
   inject: function(csp){
-    var defsrcs = ['http://*.'+ROOT_DOMAIN, 'https://*.'+ROOT_DOMAIN],
+    // NOTE - *.domain should include the root as well as subdomains, which it does for Chrome
+    // but Firefox doesn't recognize it so both need to be included
+    var defsrcs = [
+          'http://'+ROOT_DOMAIN,
+          'https://'+ROOT_DOMAIN,
+          'http://*.'+ROOT_DOMAIN,
+          'https://*.'+ROOT_DOMAIN
+        ],
         // via: https://developer.mozilla.org/en-US/docs/Security/CSP/CSP_policy_directives
         directives = {
           'default-src': defsrcs,
-          'script-src': [
+          'script-src':  defsrcs.concat([
             "'unsafe-eval'",
-            'http://*.'+ROOT_DOMAIN,
-            'https://*.'+ROOT_DOMAIN
-          ],
-          'object-src': defsrcs,
-          'img-src':    defsrcs,
-          'media-src':  defsrcs,
-          'frame-src':  defsrcs,
-          'font-src':   defsrcs,
-          'connect-src': [
-            'http://*.'+ROOT_DOMAIN,
-            'https://*.'+ROOT_DOMAIN,
+            "'unsafe-inline'"
+          ]),
+          'object-src':  defsrcs,
+          'img-src':     defsrcs,
+          'media-src':   defsrcs,
+          'frame-src':   defsrcs,
+          'font-src':    defsrcs,
+          'connect-src': defsrcs.concat([
             "ws://*.pusherapp.com",
             "wss://*.pusherapp.com",
             // SockJS fallback endpoints
             "http://*.pusher.com",
             "https://*.pusher.com"
-          ],
-          'style-src':  defsrcs,
+          ]),
+          'style-src':  defsrcs.concat([
+            "'unsafe-inline'"
+          ]),
           'report-uri': defsrcs
         };
 
