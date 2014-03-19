@@ -28,11 +28,9 @@ var load = function(){
 
 var submit = function(params){
   if(!loaded) loaded = load();
-  var script = document.createElement('script'),
-      url   = params.url,
-      title = params.title ? '"'+params.title+'"' : 'null';
+  var script = document.createElement('script');
   script.appendChild(document.createTextNode(
-    'var r_submit = function(){ reading.submit({url:"'+url+'", title:'+title+'}) };'+
+    'var r_submit = function(){ reading.submit('+JSON.stringify(params)+') };'+
     'if(reading.ready) r_submit();'+
     'else document.addEventListener("reading.ready", r_submit);'
   ));
