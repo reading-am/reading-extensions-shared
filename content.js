@@ -73,7 +73,7 @@ var get_parent = function(curNode, parentType){
 
 switch(PLATFORM){
   case 'chrome':
-    chrome.extension.onRequest.addListener(
+    chrome.runtime.onMessage.addListener(
       function(request, sender, sendResponse){
         relay_message(request);
         sendResponse({}); // close the connection
