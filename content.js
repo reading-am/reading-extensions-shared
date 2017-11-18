@@ -8,7 +8,7 @@ var DOMAIN    = 'www.reading.am',
     // DOMAIN = 'www.reading.dev:3000',
     // PROTOCOL = 'http',
     ROOT_URL  = PROTOCOL+'://'+DOMAIN,
-    VERSION   = '1.1.5',
+    VERSION   = '1.1.6',
     PLATFORM  = (typeof chrome !== 'undefined' ? 'chrome' : (typeof safari !== 'undefined' ? 'safari' : 'firefox')),
     head      = document.getElementsByTagName('head')[0],
     loaded    = false,
@@ -73,7 +73,10 @@ var get_parent = function(curNode, parentType){
 
 switch(PLATFORM){
   case 'chrome':
-    chrome.extension.onRequest.addListener(
+    var browser = chrome;
+    // intentional fall-through
+  case 'firefox':
+    browser.runtime.onMessage.addListener(
       function(request, sender, sendResponse){
         relay_message(request);
         sendResponse({}); // close the connection
